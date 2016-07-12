@@ -7,3 +7,8 @@ Os dados brutos não estão disponíveis por questão de confidencialidade. Comp
 # Visualização
 
 O modelo final da tese pode ser visualizado [aqui](http://htmlpreview.github.io/?https://github.com/erikson84/TopicModelsFreeAssociation/blob/master/finalModel/index.html).
+
+# Licença
+
+O código-fonte deste repositório está licenciado sob as condições GNU GPLv3.
+A base de dados e a tese estão licenciados sob os termos Creative Commons CC-BY-4.0.
