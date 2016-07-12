@@ -10,5 +10,6 @@ O modelo final da tese pode ser visualizado [aqui](http://htmlpreview.github.io/
 
 # Licença
 
-O código-fonte deste repositório está licenciado sob as condições GNU GPLv3.
-A base de dados e a tese estão licenciados sob os termos Creative Commons CC-BY-4.0.
+O código-fonte deste repositório está licenciado sob as condições [GNU GPLv3](http://www.gnu.org/licenses/gpl-3.0.txt).
+
+A base de dados e a tese estão licenciados sob os termos Creative Commons [CC-BY-4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode.txt).
