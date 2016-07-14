@@ -1,8 +1,8 @@
 # Functions used in chapter 4 for posterior predictive checking.
 
-docs <- corpusFinal$documents
-vocab <- corpusFinal$vocab
-
+docs <- corpus$documents
+vocab <- corpus$vocab
+beta <- exp(model$beta$logbeta[[1]])
 
 # Use model parameters to compute MAP for Z variable
 zMAP <- function(model, document, docN) {
@@ -19,7 +19,7 @@ zMAP <- function(model, document, docN) {
 }
 
 for (i in 1:length(docs)){
-  docs[[i]] <- rbind(docs[[i]], zMAP(MFinal, docs[[i]], i))
+  docs[[i]] <- rbind(docs[[i]], zMAP(model, docs[[i]], i))
 }
 
 buildZ <- function(doc){
@@ -42,7 +42,7 @@ Ds <- as.numeric(Ds)
 Zs <- as.numeric(unlist(lapply(zDist, function(x) x[2,])))
 Ws <- as.numeric(unlist(lapply(zDist, function(x) x[1,])))
 
-#Mutual Information entre W e D dado um tópico z
+# Mutual Information entre W e D dado um tópico z
 MI <- function(z, Ws){
   Nwdk <- table(Ws[Zs==z], Ds[Zs==z])
   Nwdk <- Nwdk/sum(Nwdk)
@@ -98,8 +98,8 @@ for (t in 1:50){
 
 deviances <- ((realizedStat - apply(testStat, 2, mean))/apply(testStat, 2, sd))
 
-save(deviances, file='deviances.RData')
-
+ggplot(data.frame(x=deviances), aes(x=deviances)) + geom_histogram(fill='#00BFC4', bins=20) +
+  ggtitle('Desvio da informação mútua') + ylab('Frequência') + xlab('Desvio (em desvios-padrão)')
 
 ######################
 # Get top topic words
@@ -113,7 +113,7 @@ getTopWords <- function(M, topic, n=10){
 testWords <- array(NA, c(100, 10, 50))
 
 for (t in 1:50){
-  top10 <- getTopWords(MFinal, t)
+  top10 <- getTopWords(model, t)
   for (r in 1:100){
     for (w in 1:10){
       testWords[r, w, t] <- IMI(t, top10[w], newWs[r, ])
@@ -121,21 +121,21 @@ for (t in 1:50){
   }
 }
 
+# Plot final results
 dataTestWords <- data.frame(IMI=as.vector(testWords[,,c(14, 29, 4)]),
-                            words=c(MFinal$vocab[c(unlist(sapply(getTopWords(MFinal, 14), function(x) rep(x, 100))))],
-                                    MFinal$vocab[c(unlist(sapply(getTopWords(MFinal, 29), function(x) rep(x, 100))))],
-                                    MFinal$vocab[c(unlist(sapply(getTopWords(MFinal, 4), function(x) rep(x, 100))))]),
+                            words=c(model$vocab[c(unlist(sapply(getTopWords(model, 14), function(x) rep(x, 100))))],
+                                    model$vocab[c(unlist(sapply(getTopWords(model, 29), function(x) rep(x, 100))))],
+                                    model$vocab[c(unlist(sapply(getTopWords(model, 4), function(x) rep(x, 100))))]),
                             topic=factor(c(rep(14, 1000), rep(29, 1000), rep(4, 1000)), levels=c(14, 29, 4), ordered=F),
                             rank=c(rep(unlist(sapply(1:10, function(x) rep(x, 100))), 3)))
 dataTestWords$words <- factor(dataTestWords$words, levels = unique(dataTestWords$words))
-dataRealWord <- data.frame(IMI=c(unlist(sapply(getTopWords(MFinal, 14), function(x) IMI(14, x, Ws))),
-                                 unlist(sapply(getTopWords(MFinal, 29), function(x) IMI(29, x, Ws))),
-                                 unlist(sapply(getTopWords(MFinal, 4), function(x) IMI(4, x, Ws)))),
-                           words=c(MFinal$vocab[getTopWords(MFinal, 14)], MFinal$vocab[getTopWords(MFinal, 29)],
-                                   MFinal$vocab[getTopWords(MFinal, 4)]),
+dataRealWord <- data.frame(IMI=c(unlist(sapply(getTopWords(model, 14), function(x) IMI(14, x, Ws))),
+                                 unlist(sapply(getTopWords(model, 29), function(x) IMI(29, x, Ws))),
+                                 unlist(sapply(getTopWords(model, 4), function(x) IMI(4, x, Ws)))),
+                           words=c(model$vocab[getTopWords(model, 14)], model$vocab[getTopWords(model, 29)],
+                                   model$vocab[getTopWords(model, 4)]),
                            topic=factor(c(rep(14, 10), rep(29, 10), rep(4, 10)), levels=c(14, 29, 4), ordered=T),
                            rank=c(rep(1:10, 3)))
-save(dataTestWords, dataRealWord, file='testWords.RData')
 ggplot(dataTestWords, aes(x=IMI, y=rank, label=words)) + geom_point(alpha=0.2)  + 
   geom_point(data=dataRealWord, color='red')+ facet_wrap(~topic)  +
   scale_y_reverse(labels=1:10, breaks=1:10) + ylab('Ranque') +

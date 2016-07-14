@@ -46,7 +46,7 @@ testAll <- function(df, baseLine, M, corpus){
   
   for (s in 1:length(sessions)){
     mu <- muTheta(sessions[s], corpus$meta$session, M)
-    #mu <- apply(M$theta, 2, mean)
+    #mu <- apply(M$theta, 2, mean) # If we don't want to take session number into account.
     tempData <- subset(df, df$sessão==sessions[s])
     outS <- data.frame()
     for (i in 1:dim(tempData)[1]){
@@ -58,10 +58,10 @@ testAll <- function(df, baseLine, M, corpus){
   out
 }
 # Build the baseline model based on marginal word distribution
-baseLine <- apply(dtmCorpusFinal, 2, sum)/sum(dtmCorpusFinal)
+baseLine <- apply(corpusDTM, 2, sum)/sum(corpusDTM)
 
 # Load the associations
-associations <- read.csv('Associações.csv')
+associations <- read.csv('../Data/associations.csv')
 
 # Run all the tests
-testeFinalSTM <- testAll(associations, baseLine, MFinal, corpusFinal)
+testeFinalSTM <- na.exclude(testAll(associations, baseLine, model, corpus))
