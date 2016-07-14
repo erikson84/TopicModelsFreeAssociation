@@ -60,7 +60,7 @@ model <- stm(documents = corpus$documents, vocab = corpus$vocab, LDAbeta = TRUE,
 # Generate LDAvis interactive visualization, the same presented
 # in the repository
 # It's commented out so this file can be executed completely
-# toLDAvis(model, corpus$documents)
+toLDAvis(model, corpus$documents, out.dir = '../finalModel')
 
 ###########################################
 #
