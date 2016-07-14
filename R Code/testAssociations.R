@@ -64,4 +64,4 @@ baseLine <- apply(corpusDTM, 2, sum)/sum(corpusDTM)
 associations <- read.csv('../Data/associations.csv')
 
 # Run all the tests
-testeFinalSTM <- na.exclude(testAll(associations, baseLine, model, corpus))
+hypTest <- testAll(associations, baseLine, model, corpus)

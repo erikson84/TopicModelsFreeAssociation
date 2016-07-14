@@ -2,7 +2,12 @@
 
 Repositório contendo o código-fonte das análises realizadas em minha tese de doutorado.
 
-Os dados brutos não estão disponíveis por questão de confidencialidade. Compartilhamos em seu lugar uma matriz de termos e documentos codificada para permitir reproduzir as análises.
+O código para reprodução local pode ser conferido no arquivo 'replicate.R'.
+
+Algumas dos arquivos de código-fonte não são diretamente utilizados nas rotinas de replicação
+porque eles são baseados no processamentos dos dados brutos.
+
+Os dados brutos, porém, não estão disponíveis por questão de confidencialidade. Compartilhamos em seu lugar uma matriz de termos e documentos codificada para permitir reproduzir as análises.
 
 # Visualização
 

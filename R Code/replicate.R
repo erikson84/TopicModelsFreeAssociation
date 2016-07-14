@@ -84,6 +84,58 @@ source('./zMAP.R')
 
 # The external validation hypotheses described in 
 # chapter 4 are implemented in the 'testAssociations.R' file.
-# The source file implements 
+# The source file implements a function to compute p(w2|w1)
+# the expected value for each topic, E[z] based on numeric
+# integration.
+
+# The source saves all the results in a data frame,
+# 'testeFinalSTM'.
 
 source('./testAssociations.R')
+
+# Plot histograms of probability ratios.
+
+ggplot(data.frame(`Razão de Probabilidade`=c(hypTest$ratio, log(hypTest$ratio)), tipo=factor(c(rep('Original', 100), rep('Logarítmica', 100)), ordered=T, levels=c('Original', 'Logarítmica'))), aes(x=Razão.de.Probabilidade)) + 
+  geom_histogram(fill='#00BFC4', bins=20)+facet_grid(~tipo, scales = 'free') +
+  xlab('Razão de Probabilidade') + ylab('Frequência') +ggtitle('Distribuição da razão de probabilidade')
+
+# Data frame for predicted word rank
+
+testOrd = hypTest[order(hypTest$mtRank, hypTest$mmRank), ]
+testOrd = na.exclude(testOrd)
+testOrd = testOrd[testOrd$mtRank<=10,]
+testOrd = testOrd[, c(1, 2, 6, 7)]
+names(testOrd) = c('Palavra-estímulo', 'Palavra-resposta', 'Ordem MT', 'Ordem MM')
+rownames(testOrd) = NULL
+testOrd
+
+###########################################
+#
+# (5) Graphics for model inferences
+#
+###########################################
+
+# Finally, we implement the plots to present model inferences.
+# The functions are based on 'stm' core functions, but implemented
+# with ggplot. Both functions are commented in their source files.
+
+source('./plotTopic.R')
+source('./plotAll.R')
+
+# Use stm's 'estimateEffect' function to compute the posterior distribution
+# for regression coefficients
+eff <- estimateEffect(~ speaker + s(session), model, metadata = corpus$meta,
+                      documents = corpus$documents, nsims = 100)
+# Plot topic 21
+plotTopic(topic=21, eff=eff, M=model, frex=FALSE)
+
+# Plot topic 35
+plotTopic(topic=35, eff=eff, M=model, frex=TRUE)
+
+# Plot topic 31
+plotTopic(topic=31, eff=eff, M=model, frex=FALSE)
+
+# Plot topic 46
+plotTopic(topic=46, eff=eff, M=model, frex=FALSE)
+
+plotTopic(topic=11, eff=eff, M=model, frex=FALSE)
