@@ -58,7 +58,7 @@ model <- stm(documents = corpus$documents, vocab = corpus$vocab, LDAbeta = TRUE,
 # Generate LDAvis interactive visualization, the same presented
 # in the repository
 
-toLDAvis(model, corpus$documents)
+toLDAvis(model, corpus$documents, out.dir = 'finalModel')
 
 ###########################################
 #
@@ -138,4 +138,38 @@ plotTopic(topic=31, eff=eff, M=model, frex=FALSE)
 # Plot topic 46
 plotTopic(topic=46, eff=eff, M=model, frex=FALSE)
 
+# Plot topic 11
 plotTopic(topic=11, eff=eff, M=model, frex=FALSE)
+
+# Plot topic 43
+plotTopic(topic=43, eff=eff, M=MFinal, frex=FALSE)
+
+# Plot both topic 18 and 12
+grid.arrange(plotTopic(topic=18, eff=eff, M=MFinal, frex=TRUE, type='label'),
+             plotTopic(topic=12, eff=eff, M=MFinal, frex=FALSE, type='label'), ncol=2)
+
+# Plot topic 37
+plotTopic(topic=37, eff=eff, M=MFinal, frex=FALSE)
+
+# Plot topic 26
+plotTopic(topic=26, eff=eff, M=MFinal, frex=TRUE)
+
+# Plot topic 3
+plotTopic(topic=3, eff=eff, M=MFinal, frex=FALSE)
+
+# Plot topic 30
+plotTopic(topic=30, eff=eff, M=MFinal, frex=TRUE)
+
+# Plot topic 17
+plotTopic(topic=17, eff=eff, M=MFinal, frex=TRUE)
+
+# Plot marginal topic proportions
+plotAll(model)
+
+# Plot correlation matrix as graph
+# First, build sparse correlation based on stm's 'topicCorr' function
+library(igraph) # For graph plotting functions and community discovery
+corrFinal <- topicCorr(model, method='huge')
+tempGraph = graph.adjacency(corrFinal$posadj, mode = "undirected", weighted = TRUE, diag = FALSE)
+fc = fastgreedy.community(tempGraph)
+plot(tempGraph, vertex.color = membership(fc),  vertex.label.cex=1)

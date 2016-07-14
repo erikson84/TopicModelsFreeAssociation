@@ -4,7 +4,7 @@ Repositório contendo o código-fonte das análises realizadas em minha tese de 
 
 O código para reprodução local pode ser conferido no arquivo 'replicate.R'.
 
-Algumas dos arquivos de código-fonte não são diretamente utilizados nas rotinas de replicação
+Alguns dos arquivos de código-fonte não são diretamente utilizados nas rotinas de replicação
 porque eles são baseados no processamentos dos dados brutos.
 
 Os dados brutos, porém, não estão disponíveis por questão de confidencialidade. Compartilhamos em seu lugar uma matriz de termos e documentos codificada para permitir reproduzir as análises.
@@ -19,4 +19,6 @@ O código-fonte deste repositório está licenciado sob as condições [GNU GPLv
 
 A tese está licenciada sob os termos Creative Commons [CC-BY-SA-4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode.txt).
 
-A base de dados do *corpus* e os metadados são de uso privativo e só podem ser utilizados para outros fim sob estrita autorização do autor.
+A base de dados do *corpus*, os metadados e os dados das associações (o conteúdo do diretório 'Data') são de uso exclusivo para reprodução dos resultados e só podem ser utilizados para outros fim sob estrita autorização do autor.
+
+The *corpus* document-term matrix dataset, metadata and association data (the content of the 'Data' folder) are meant to be used exclusively for results reproduction. The data cannot be used for any other end unless the author formally authorizes it.
