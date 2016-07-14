@@ -9,6 +9,8 @@ library(ggplot2) # GGPlot for plotting functions
 library(mvtnorm) # Multivariate normal RNG for numerical integration
 library(tm) # General text processing functions
 
+setwd(getwd()) # Set the current dir as the working dir.
+
 ###########################################
 #
 # (1) Load the data
@@ -57,8 +59,8 @@ model <- stm(documents = corpus$documents, vocab = corpus$vocab, LDAbeta = TRUE,
 
 # Generate LDAvis interactive visualization, the same presented
 # in the repository
-
-toLDAvis(model, corpus$documents, out.dir = 'finalModel')
+# It's commented out so this file can be executed completely
+# toLDAvis(model, corpus$documents)
 
 ###########################################
 #
@@ -72,7 +74,9 @@ toLDAvis(model, corpus$documents, out.dir = 'finalModel')
 
 # All procedures are described in the 'zMAP.R' file. 
 # We simply run the source code, but it takes a while
-# to finish running.
+# to finish running. It should output two graphs:
+# (1) Histogram for topic MI deviance;
+# (2) PPC plot for three topics and 10 top words in each.
 
 source('./zMAP.R')
 
@@ -142,26 +146,26 @@ plotTopic(topic=46, eff=eff, M=model, frex=FALSE)
 plotTopic(topic=11, eff=eff, M=model, frex=FALSE)
 
 # Plot topic 43
-plotTopic(topic=43, eff=eff, M=MFinal, frex=FALSE)
+plotTopic(topic=43, eff=eff, M=model, frex=FALSE)
 
 # Plot both topic 18 and 12
-grid.arrange(plotTopic(topic=18, eff=eff, M=MFinal, frex=TRUE, type='label'),
-             plotTopic(topic=12, eff=eff, M=MFinal, frex=FALSE, type='label'), ncol=2)
+grid.arrange(plotTopic(topic=18, eff=eff, M=model, frex=TRUE, type='label'),
+             plotTopic(topic=12, eff=eff, M=model, frex=FALSE, type='label'), ncol=2)
 
 # Plot topic 37
-plotTopic(topic=37, eff=eff, M=MFinal, frex=FALSE)
+plotTopic(topic=37, eff=eff, M=model, frex=FALSE)
 
 # Plot topic 26
-plotTopic(topic=26, eff=eff, M=MFinal, frex=TRUE)
+plotTopic(topic=26, eff=eff, M=model, frex=TRUE)
 
 # Plot topic 3
-plotTopic(topic=3, eff=eff, M=MFinal, frex=FALSE)
+plotTopic(topic=3, eff=eff, M=model, frex=FALSE)
 
 # Plot topic 30
-plotTopic(topic=30, eff=eff, M=MFinal, frex=TRUE)
+plotTopic(topic=30, eff=eff, M=model, frex=TRUE)
 
 # Plot topic 17
-plotTopic(topic=17, eff=eff, M=MFinal, frex=TRUE)
+plotTopic(topic=17, eff=eff, M=model, frex=TRUE)
 
 # Plot marginal topic proportions
 plotAll(model)
