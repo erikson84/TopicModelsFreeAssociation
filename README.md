@@ -2,7 +2,7 @@
 
 Repositório contendo o código-fonte das análises realizadas em minha tese de doutorado.
 
-O código para reprodução local pode ser conferido no arquivo ['reproduce.R'](/R Code/reproduce.R).
+O código para reprodução local pode ser conferido no arquivo ['reproduce.R'](https://github.com/erikson84/TopicModelsFreeAssociation/blob/master/R%20Code/reproduce.R).
 
 Alguns dos arquivos de código-fonte não são diretamente utilizados nas rotinas de reprodução
 porque eles são baseados no processamento dos dados brutos.
